@@ -92,7 +92,7 @@ abstract class Rute {
     //returnerer streng av tallet som er i ruten, bokstav om over 9
     public String getInnhold() {
 	String retur = "";
-	String alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	String alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ?";
 	
 	if (this.tall > 9) {
 	    retur = String.valueOf(alfabet.charAt(this.tall - 10));

@@ -31,7 +31,10 @@ class Kontroll {
 	double startTid = System.nanoTime();
 
 	while (oppgave.enVerdi() || oppgave.fyllUt() || oppgave.avansertFyllUt()) {}
-	
+// 	do {
+// 	    while (oppgave.enVerdi() || oppgave.fyllUt()) {}
+// 	} while (oppgave.avansertFyllUt());
+
 	System.out.println("Paa tide med litt brute force");
 	loesninger = oppgave.finnLoesninger();
 	it = loesninger.iterator();
@@ -75,6 +78,9 @@ class Kontroll {
 	boksLengde = les.nextInt();
 	lengde = boksHoeyde * boksLengde;
 	utgangspunkt = new int[lengde][lengde];
+	// while (les.hasNext()) {
+	//     nesteTall(les.next());
+	// }
 	while (les.hasNext()) {
 	    String linje = les.nextLine();
 	    for (int i = 0; i < linje.length(); i++) {
@@ -87,7 +93,7 @@ class Kontroll {
      private void nesteTall(String info) {
 	int tall;
 	info = info.replace(".", "-1");
-	String alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	String alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ?";
 	CharSequence c = info;
 	if (alfabet.contains(c)) {
 	    tall = alfabet.indexOf(info) + 10;

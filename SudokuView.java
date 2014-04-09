@@ -42,7 +42,7 @@ class SudokuView implements ActionListener {
 	    //lager knapper til hvert bokspanel
 	    for (int j = 0; j < stoerrelse; j++) {
 		JButton knapp = new JButton(String.valueOf(boksArray[i][j]));
-		knapp.setFont(new Font("Helvetica", 100, 20));
+		knapp.setFont(new Font("Helvetica", 100, 10));
 		knapp.setEnabled(false);
 		boksPaneler[i].add(knapp);
 	    }
@@ -105,7 +105,7 @@ class SudokuView implements ActionListener {
 		knapp.setBackground(farger[teller % 2]);
 		
 	    }
-	    if (bokserPerRad % 2 == 0 && i % bokserPerRad == 1 && i != 0) {
+	    if (bokserPerRad % 2 == 0 && (i+1) % bokserPerRad == 0) {
 		teller++;
 	    }
 	    teller++;
