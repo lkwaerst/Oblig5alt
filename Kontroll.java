@@ -59,7 +59,7 @@ class Kontroll {
 	    skrivTilTerminal();
 	}
 	catch (FileNotFoundException e) {
-	    System.out.println("Fant ikke srivefila");
+	    System.out.println("Fant ikke skrivefila");
 	}
 	catch (Exception e) {
 	    e.printStackTrace();
@@ -67,6 +67,7 @@ class Kontroll {
 
 	System.out.println("Antall loesninger: " + loesninger.getAntLoesninger());
 	gui = new SudokuView(utgangspunkt, boksHoeyde, boksLengde, this);
+	visNesteLoesning(); //viser foerste
     }
 
     //fyller ut utgangspunkt[] med verdier slik at den representerer sudokuen i filen
@@ -107,8 +108,7 @@ class Kontroll {
 	    for (int j = 0; j < lengde && !ferdig; j++) {
 		if (utgangspunkt[i][j] == 0) {
 		    utgangspunkt [i][j] = tall;
-		    ferdig = true;
-		    
+		    ferdig = true;		    
 		}
 	    }
 	}
@@ -140,6 +140,10 @@ class Kontroll {
 
     public void visForrigeLoesning() {
     }
+    
+    public int getAntLoesninger() {
+	return loesninger.getAntLoesninger();
+    }	
 }
 	
 
