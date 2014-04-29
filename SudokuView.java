@@ -30,10 +30,10 @@ class SudokuView implements ActionListener {
 	bokserPerRad = stoerrelse/boksLengde;
 	antLoesninger = k.getAntLoesninger();
 
-	vindu = new JFrame("sudoku");
+	vindu = new JFrame("Sudoku");
 	visningsPanel = new JPanel();
 	visningsPanel.setLayout(new GridLayout(stoerrelse/boksHoeyde, stoerrelse/boksLengde ));
-	visningsPanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
+	visningsPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 
 	/*lager paneler med grid layout for hver boks, putter riktige verdier inn i dem,
 	  og legger dem inn i visningspanelet*/
@@ -42,11 +42,10 @@ class SudokuView implements ActionListener {
 	for (int i = 0; i < stoerrelse; i++) {
 	    boksPaneler[i] = new JPanel();
 	    boksPaneler[i].setLayout(new GridLayout(boksHoeyde, boksLengde));
-	    boksPaneler[i].setBorder(BorderFactory.createLineBorder(Color.black, 2));
+	    boksPaneler[i].setBorder(BorderFactory.createLineBorder(Color.black, 1));
 	    
 	    //lager knapper til hvert bokspanel
 	    for (int j = 0; j < stoerrelse; j++) {
-		//JButton knapp = new JButton(String.valueOf(Character.forDigit(sudoku[i][j], Character.MAX_RADIX)).toUpperCase());
 		JButton knapp = new JButton(String.valueOf(boksArray[i][j]));
 		knapp.setFont(new Font("Helvetica", 100, 10));
 		knapp.setEnabled(false);
@@ -68,8 +67,8 @@ class SudokuView implements ActionListener {
 	kontrollPanel.add(nesteLoesningKnapp);
 
 	//viser hvor mange loesninger som finnes om flere enn 1
-	tallPanel = new JPanel();
 	if (antLoesninger > 1) {
+	    tallPanel = new JPanel();
 	    tallPanel.add(new JLabel("Loesning:"));
 	    tellerVindu = new JLabel(String.valueOf(teller));
 	    tallPanel.add(tellerVindu);
@@ -80,13 +79,15 @@ class SudokuView implements ActionListener {
 	vindu.add(visningsPanel, BorderLayout.CENTER);
 	vindu.add(kontrollPanel, BorderLayout.SOUTH);
 	vindu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	vindu.setSize(50000, 50000);
+	vindu.setSize(stoerrelse * 100, stoerrelse * 100);
 	vindu.setVisible(true);
 	malBokser();
 
     }
 
+    //viser neste loesning
     public void nySudoku(int[][] sudoku) {
+	teller++;
 	for (int i = 0; i < stoerrelse; i++) {
 	    for (int j = 0; j < stoerrelse; j++) {
 		JButton knapp = (JButton) boksPaneler[i].getComponent(j);
@@ -94,16 +95,21 @@ class SudokuView implements ActionListener {
 	    }
 	}
 	if (tellerVindu != null) {
-	    tellerVindu.setText(String.valueOf(++teller));
+	    tellerVindu.setText(String.valueOf(teller));
+	}
+	if (teller == antLoesninger) {
+	    nesteLoesningKnapp.setEnabled(false);
 	}
     }
-
+    
+    //metode for aa velge fil
     public static File velgFil() {
 	JFileChooser filVelger = new JFileChooser();
 	int retur = filVelger.showOpenDialog(null);
 	return filVelger.getSelectedFile();
     }
 
+    //metode som tar seg av knappetrykk
     public void actionPerformed(ActionEvent e) {
 	if (e.getSource() == nesteLoesningKnapp) {
 	    kontroll.visNesteLoesning();
@@ -117,6 +123,7 @@ class SudokuView implements ActionListener {
 	}
     }
 
+    //fargelegger boksene
     private void malBokser() {
 	Color[] farger = {Color.white, Color.lightGray};
 	int teller = 0;

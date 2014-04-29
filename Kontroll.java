@@ -13,6 +13,7 @@ class Kontroll {
     SudokuView gui;
 
     Kontroll(String[] filnavn) {
+	//leser fil og legger inn tall i arrayen
 	try {
 	    if (filnavn.length > 0) {
 		lesFil(new File(filnavn[0]));
@@ -31,9 +32,6 @@ class Kontroll {
 	double startTid = System.nanoTime();
 
 	while (oppgave.enVerdi() || oppgave.fyllUt() || oppgave.avansertFyllUt()) {}
-// 	do {
-// 	    while (oppgave.enVerdi() || oppgave.fyllUt()) {}
-// 	} while (oppgave.avansertFyllUt());
 
 	System.out.println("Paa tide med litt brute force");
 	loesninger = oppgave.finnLoesninger();
@@ -41,16 +39,6 @@ class Kontroll {
 	double sluttTid = System.nanoTime();
 
 	System.out.println("Kjoeretid : " + (sluttTid - startTid) / 1000000);
-	//test
-	// int[][] ff = new int[9][9];
-	// for (int i = 0; i < 9; i++) {
-	//     for (int j = 0; j < 9; j++) {
-	// 	ff[i][j] = -1;
-	//     }
-	// }
-	// b = new Brett(ff, 9, 3, 3);	    	    
-	// SudokuBeholder s = b.finnLoesninger();
-	// System.out.println("Antall loesninger: " + s.getAntallLoesninger());
 
 	try {
 	    skrivTilFil(filnavn[1]);
@@ -79,9 +67,7 @@ class Kontroll {
 	boksLengde = les.nextInt();
 	lengde = boksHoeyde * boksLengde;
 	utgangspunkt = new int[lengde][lengde];
-	// while (les.hasNext()) {
-	//     nesteTall(les.next());
-	// }
+
 	while (les.hasNext()) {
 	    String linje = les.nextLine();
 	    for (int i = 0; i < linje.length(); i++) {
@@ -95,8 +81,7 @@ class Kontroll {
 	int tall;
 	info = info.replace(".", "-1");
 	String alfabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ?";
-	CharSequence c = info;
-	if (alfabet.contains(c)) {
+	if (alfabet.contains(info)) {
 	    tall = alfabet.indexOf(info) + 10;
 	}
 	else {

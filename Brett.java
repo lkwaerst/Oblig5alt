@@ -21,18 +21,6 @@ class Brett {
 	this.boksLengde = boksLengde;
 	this.boksHoeyde = boksHoeyde;
 
-	//testutskrift
-	// System.out.println("\n\n");
-	// for (int i = 0; i < stoerrelse; i++) {
-	//     for (int j = 0; j < stoerrelse; j++) {
-	// 	System.out.printf("%3d", info[i][j]);
-	//     }
-	//     System.out.println();
-	// }
-	// System.out.println("\n\n" + stoerrelse);
-	// System.exit(0);
-
-
 	//lager rader
 	for (int i = 0; i < stoerrelse; i++) {
 	    rader[i] = new Rad(info[i]);
@@ -44,24 +32,15 @@ class Brett {
 	    kolonner[i] = new Kolonne(snuddInfo[i]);
 	}
 	
-	//forvrenger arrayen og lager bokser
+	//lager bokser
 	int[][] boksArray = boksTabell(info);
 	for (int i = 0; i < stoerrelse; i++) {
 	    bokser[i] = new Boks(boksArray[i]);
 	}
 
-	//test
-	// System.out.println("\n\n");
-	// for (int i = 0; i < stoerrelse; i++) {
-	//     for (int j = 0; j < stoerrelse; j++) {
-	// 	System.out.printf("%2d", boksArray[i][j]);
-	//     }
-	//     System.out.println();
-	// }
-    
-	int[] blegh = {1, 2, 3};
 	//lager rute objekter og lenker dem sammen
-	Rute forrigeRute = new AapenRute(new Rad(blegh), new Kolonne(blegh), new Boks(blegh), this); //forsvinner etterhvert
+	int[] a = {1};
+	Rute forrigeRute = new AapenRute(new Rad(a), new Kolonne(a), new Boks(a), this); //
 	for (int i = 0; i < stoerrelse; i++) {
 	    for (int j = 0; j < stoerrelse; j++) {
 		if (info[i][j] == -1) {

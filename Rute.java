@@ -9,17 +9,11 @@ abstract class Rute {
     protected Rute neste;
     protected Rute forrige;
     private int grense;
-    boolean skrivUt = true;
     private boolean[] muligeVerdier;
-    static int antRuter = 0;
-    public int ruteNr;
-    boolean utfylt;
-    static int antLoesteRuter = 1;
     
     
     Rute(Rad rad, Kolonne kol, Boks boks, int verdi, Brett brett) {
 	
-	ruteNr = antRuter++;
 	this.boks = boks;
 	kolonne = kol;
 	this.rad = rad;
@@ -70,7 +64,6 @@ abstract class Rute {
     }
 
     public void settInnTall(int tall) {
-	//System.out.println(tall + " settes inn i rute " + ruteNr + "\n\n");
 	this.tall = tall;
 	boks.leggTilTall(tall);
 	rad.leggTilTall(tall);
@@ -78,7 +71,6 @@ abstract class Rute {
     }
 
     public void taUtTall(int tall) {
-	//System.out.println(tall + " tas ut av " + ruteNr + "\n\n");
 	this.tall = -1;
 	boks.taUtTall(tall);
 	rad.taUtTall(tall);
@@ -126,7 +118,6 @@ abstract class Rute {
 
     //kalles naar det bare finnes en mulighet for ruten
     public UtfyltRute fyllUtRute() {
-	//System.out.println(antLoesteRuter++);
 	int tall = 0;
 	boks.fjern(this);
 	rad.fjern(this);
@@ -151,8 +142,8 @@ abstract class Rute {
 	return nyRute;
     }
 
+    
     public void fyllUtRute(int tall) {
-	//System.out.println(antLoesteRuter++);
 	boks.fjern(this);
 	rad.fjern(this);
 	kolonne.fjern(this);
