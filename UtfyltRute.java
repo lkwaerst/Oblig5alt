@@ -6,7 +6,7 @@ class UtfyltRute extends Rute {
 	super(r, k, b, tall, brett);
     }
 
-    //kaller paa nestes metode, true om det er siste rute, passivt mellomledd
+    //kaller paa nestes metode, eller returnerer om det er siste rute
     public SudokuBeholder fyllUtRestenAvBrettet(SudokuBeholder loesninger) {
 	if (neste != null) {
 	    return neste.fyllUtRestenAvBrettet(loesninger);
@@ -16,6 +16,10 @@ class UtfyltRute extends Rute {
     }
 
     public boolean erLovligTall(int tall) {
+	return false;
+    }
+
+    public boolean enMulighet() {
 	return false;
     }
 }

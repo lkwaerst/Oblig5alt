@@ -10,7 +10,7 @@ class Kontroll {
     int boksHoeyde;
     int boksLengde;
     Iterator<Brett> it;
-    SudokuView gui;
+    SudokuGui gui;
 
     Kontroll(String[] filnavn) {
 	//leser fil og legger inn tall i arrayen
@@ -19,7 +19,7 @@ class Kontroll {
 		lesFil(new File(filnavn[0]));
 	    }
 	    else {
-		lesFil(SudokuView.velgFil());
+		lesFil(SudokuGui.velgFil());
 	    }
 	}
 	catch (FileNotFoundException e) {
@@ -28,18 +28,15 @@ class Kontroll {
 	}
 	
 	oppgave = new Brett(utgangspunkt, lengde, boksLengde, boksHoeyde);
-	boolean fremgang = true;
-	double startTid = System.nanoTime();
 
-	while (oppgave.enVerdi() || oppgave.fyllUt() || oppgave.avansertFyllUt()) {}
+	//fyller ut det som kan fylles ut
+	while (oppgave.enVerdi() || oppgave.fyllUt() || oppgave.fjernMuligheter()) {}
 
-	System.out.println("Paa tide med litt brute force");
+	//loeser resten ved aa proeve alle muligheter
 	loesninger = oppgave.finnLoesninger();
 	it = loesninger.iterator();
-	double sluttTid = System.nanoTime();
 
-	System.out.println("Kjoeretid : " + (sluttTid - startTid) / 1000000);
-
+	//skriver til fil/terminal
 	try {
 	    skrivTilFil(filnavn[1]);
 	}
@@ -54,8 +51,10 @@ class Kontroll {
 	}
 
 	System.out.println("Antall loesninger: " + loesninger.getAntLoesninger());
-	gui = new SudokuView(utgangspunkt, boksHoeyde, boksLengde, this);
-	visNesteLoesning(); //viser foerste
+
+	//starter gui og viser foerste loesning
+	gui = new SudokuGui(utgangspunkt, boksHoeyde, boksLengde, this);
+	visNesteLoesning();
     }
 
     //fyller ut utgangspunkt[] med verdier slik at den representerer sudokuen i filen
@@ -123,9 +122,6 @@ class Kontroll {
 	gui.nySudoku(oppgave.boksTabell(neste.getTall()));
     }
 
-    public void visForrigeLoesning() {
-    }
-    
     public int getAntLoesninger() {
 	return loesninger.getAntLoesninger();
     }	

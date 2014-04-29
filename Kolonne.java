@@ -4,7 +4,7 @@ class Kolonne extends AbstraktTallBeholder {
 	super(tall);
     }
 
-    //sjekker om tellet maa vaere paa en bestemt Linje/kolonne/boks/ og fjerner den fra resten
+    //sjekker om tallet maa vaere i en bestemt boks, saa fjernes muligheten fra resten av boksen
     public boolean sjekkTall(int tall) {
 	Rute[] muligeRuter = proev(tall);
 	if (muligeRuter.length < 2) {
@@ -23,7 +23,7 @@ class Kolonne extends AbstraktTallBeholder {
 	    }
 	}
 	
-	boolean fremgang =  match.ulovligTall(tall, this);
+	boolean fremgang =  match.ulovligTall(tall, this); //true om muligheter ble fjernet
 	return fremgang;
     }
 }

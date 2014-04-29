@@ -5,6 +5,8 @@ class SudokuBeholder implements Iterable<Brett> {
     Node start;
     Node slutt;
 
+    /*legger til ny loesning om antallLoesninger er mindre enn 750,
+      ellers oekes bare antallLoesninger*/
     public void add(Brett nyttBrett) {
 	Node nyNode = new Node(nyttBrett);
 	if (antallLoesninger > 750) {

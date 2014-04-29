@@ -1,26 +1,12 @@
 //-1 for tomme plasser
 abstract class AbstraktTallBeholder {
 
-    int[] tallSamling;
-    Rute[] ruter;
-    public static int a = 0;
-    public int nr = 0;
+    private int[] tallSamling;
+    private Rute[] ruter;
 
     AbstraktTallBeholder(int[] tall) {
-	nr = a++;
 	ruter = new Rute[tall.length];
 	tallSamling = tall;
-	
-// 	for (int i = 0; i < tall.length; i++) {
-// 	    try {
-// 		tallSamling[tall[i]] = tall[i];
-// 	    }
-// 	    catch (ArrayIndexOutOfBoundsException e) {
-// 		tallSamling[i] = 0;
-// 	    }
-		
-// 	}
-// 	tallSamling = tall;
     }
 
     public void settInn(int tall) {
@@ -30,11 +16,6 @@ abstract class AbstraktTallBeholder {
 		return;
 	    }
 	}
-// 	if (tallSamling[tall] != 0) {
-// 	    System.out.println("au da");
-// 	    //System.exit(0);
-// 	}
-// 	tallSamling[tall] = tall;
     }
 
     public void taUt(int tall) {
@@ -46,6 +27,7 @@ abstract class AbstraktTallBeholder {
 	}
     }
     
+    //true om tallet ikke finnes i beholderen allerede
     public boolean tallPasser(int tall) {
 	for (int i = 0; i < tallSamling.length; i++) {
 	    if (tallSamling[i] == tall) {
@@ -64,6 +46,7 @@ abstract class AbstraktTallBeholder {
 	}
     }
 
+    //setter inn tallet og gjoer det ulovlig i alle rutene
     public void leggTilTall(int tall) {
 	settInn(tall);
 	for (Rute r : ruter) {
@@ -71,6 +54,7 @@ abstract class AbstraktTallBeholder {
 	}
     }
     
+    //tar ut tall og gjoer det lovlig i alle ruter som kan
     public void taUtTall(int tall) {
 	taUt(tall);
 	for (Rute r : ruter) {
@@ -84,6 +68,7 @@ abstract class AbstraktTallBeholder {
 	return ruter;
     }
 
+    //fjerner rute fra beholderen
     public void fjern(Rute r) {
 	for (int i = 0; i < ruter.length; i++) {
 	    if (ruter[i] == r) {
@@ -94,6 +79,7 @@ abstract class AbstraktTallBeholder {
     }
 
     public boolean loes() {
+	//lager array der tallene er paa indeksen til verdien sin
 	int[] verdier = new int[tallSamling.length+1];
 	for (int i = 0; i < tallSamling.length; i++) {
 	    if (tallSamling[i] != -1) {
@@ -104,10 +90,9 @@ abstract class AbstraktTallBeholder {
 	boolean fremgang = false;
 
 	for (int i = 1; i < verdier.length; i++) {
-	    if (verdier[i] == 0) {
+	    if (verdier[i] == 0) {   //om tallet ikke finnes i beholderen enda
 		Rute[] retur = proev(i);
-		//fremgang = sjekkTall(i); //ny greie
-		if (retur.length == 1) {
+		if (retur.length == 1) {  //en mulighet
 		    retur[0].fyllUtRute(i);
 		    fremgang = true;
 		}
@@ -117,7 +102,7 @@ abstract class AbstraktTallBeholder {
 	return fremgang;
     }
 
-    //returnerer den eneste ruten som tallet passer i, null om flere
+    //returnerer en array med alle rutene som har tallet som lovlig verdi
     public Rute[] proev(int tall) {
 	Rute[] lovligeRuter;
 	int teller = 0;
@@ -138,13 +123,14 @@ abstract class AbstraktTallBeholder {
 	return lovligeRuter;
     }
 
+    //overskrives i subklasser
     public boolean sjekkTall(int tall) {
 	System.out.println("her har det skjedd noe gitt");
 	return false;
     }
 
-    //true om fremgang false om ikke, fjerner tallet som alternativ i alle ruter bortsett
-    //fra de i tallbeholderen som sendes med
+    /*Fjerner tallet som alternativ i alle ruter bortset fra de i tallbeholderen
+      som sendes med, returnerer true om muligheter fjernes*/
     public boolean ulovligTall(int tall, AbstraktTallBeholder beholder) {
 	boolean fremgang = false;
 	for (Rute r : ruter) {
@@ -156,13 +142,15 @@ abstract class AbstraktTallBeholder {
 	return fremgang;
     }
 
+    //setter tall som lovlig i alle ruter
     public void lovligTall(int tall) {
 	for (Rute r : ruter) {
 	    r.lovligTall(tall);
 	}
     }
 
-    public boolean test() {
+    //mye av det samme som loes(), men fjerner muligheter dersom det er mulig
+    public boolean fjernMuligheter() {
 	int[] verdier = new int[tallSamling.length+1];
 	for (int i = 0; i < tallSamling.length; i++) {
 	    if (tallSamling[i] != -1) {

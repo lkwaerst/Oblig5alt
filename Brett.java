@@ -90,6 +90,7 @@ class Brett {
 	return nyArray;
     }
 
+    //finner boks for plass i tabellen
     public Boks finnBoks(int i, int j) {
 	int boksRad = i/boksHoeyde;
 	int boksKolonne = j/boksLengde;
@@ -153,7 +154,7 @@ class Brett {
 	int[] blegh = {1, 2, 3};
 	for (int i = 0; i < stoerrelse; i++) {
 	    for (int j = 0; j < stoerrelse; j++) {
-		if (ruter[i][j] instanceof AapenRute && ruter[i][j].enMulighet()) {
+		if (ruter[i][j].enMulighet()) {
 		    ruter[i][j] = ruter[i][j].fyllUtRute();
 		    retur = true;
 		}
@@ -162,6 +163,7 @@ class Brett {
 	return retur;
     }
 
+    //erstatter gammel aapen rute med ny utfylt rute
     public void erstatt(Rute gammel, Rute ny) {
 	for (int i = 0; i < stoerrelse; i++) {
 	    for (int j = 0; j < stoerrelse; j++) {
@@ -172,6 +174,7 @@ class Brett {
 	}
     }
 
+    //finner og fyller ut ruter som maa ha en bestemt verdi, true om en/flere ruter fylles ut
     public boolean fyllUt() {
 	boolean fremgang = false;
 
@@ -183,11 +186,12 @@ class Brett {
 	return fremgang;
     }
 
-    public boolean avansertFyllUt() {
+    //fjerner muligheter som ikke er mulige i ruter, true om en/flere muligheter fjernes
+    public boolean fjernMuligheter() {
 	boolean fremgang = false;
 
 	for (int i = 0; i < stoerrelse; i++) {
-	    if (bokser[i].test() || kolonner[i].test() || rader[i].test()) {
+	    if (bokser[i].fjernMuligheter() || kolonner[i].fjernMuligheter() || rader[i].fjernMuligheter()) {
 		fremgang = true;
 	    }
 	}

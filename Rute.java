@@ -9,7 +9,7 @@ abstract class Rute {
     protected Rute neste;
     protected Rute forrige;
     private int grense;
-    private boolean[] muligeVerdier;
+    private boolean[] muligeVerdier; //true paa indeks i om tallet i er mulig
     
     
     Rute(Rad rad, Kolonne kol, Boks boks, int verdi, Brett brett) {
@@ -95,17 +95,20 @@ abstract class Rute {
 
 	return retur;
     }
-
+    
+    //setter tallet som ulovlig verdi i ruten
     public void ulovligTall(int tall) {
 	muligeVerdier[tall] = false;
     }
 
+    //setter tallet som lovlig verdi i ruten
     public void lovligTall(int tall) {
 	if (boks.tallPasser(tall) && rad.tallPasser(tall) && kolonne.tallPasser(tall)) {
 	    muligeVerdier[tall] = true;
 	}
     }
 
+    //true om det bare finnes en mulighet i denne ruten
     public boolean enMulighet() {
 	int teller = 0;
 	for (int i = 1; i < muligeVerdier.length; i++) {
@@ -118,31 +121,33 @@ abstract class Rute {
 
     //kalles naar det bare finnes en mulighet for ruten
     public UtfyltRute fyllUtRute() {
-	int tall = 0;
-	boks.fjern(this);
-	rad.fjern(this);
-	kolonne.fjern(this);
+    	int tall = 0;
+    	boks.fjern(this);
+    	rad.fjern(this);
+    	kolonne.fjern(this);
 
-	for (int i = 1; i <= grense; i++) {
-	    if (muligeVerdier[i]) {
-		tall = i;
-		break;
-	    }
-	}
+    	//finner tallet
+    	for (int i = 1; i <= grense; i++) {
+    	    if (muligeVerdier[i]) {
+    		tall = i;
+    		break;
+    	    }
+    	}
 
-	UtfyltRute nyRute = new UtfyltRute(rad, kolonne, boks, tall, brett);
-	nyRute.settInnTall(tall);
-	nyRute.setNeste(neste);
-	nyRute.setForrige(forrige);
-	forrige.setNeste(nyRute);
-	if (neste != null) {
-	    neste.setForrige(nyRute);
-	}
-	brett.erstatt(this, nyRute);
-	return nyRute;
+    	//erstatter denne rutens plass med en ny utfylt rute
+    	UtfyltRute nyRute = new UtfyltRute(rad, kolonne, boks, tall, brett);
+    	nyRute.settInnTall(tall);
+    	nyRute.setNeste(neste);
+    	nyRute.setForrige(forrige);
+    	forrige.setNeste(nyRute);
+    	if (neste != null) {
+    	    neste.setForrige(nyRute);
+    	}
+    	brett.erstatt(this, nyRute);
+    	return nyRute;
     }
 
-    
+    //erstatter denne ruten med en ny utfylt rute
     public void fyllUtRute(int tall) {
 	boks.fjern(this);
 	rad.fjern(this);
@@ -175,6 +180,7 @@ abstract class Rute {
 	return boks;
     }
 
+    //sjekker om ruten er i en gitt beholder
     public boolean erI(AbstraktTallBeholder beholder) {
 	return boks == beholder || rad == beholder || kolonne == beholder;
     }
